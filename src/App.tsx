@@ -1,26 +1,34 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useListStore } from "./store";
+import { useShallow } from "zustand/react/shallow";
+import "./App.css";
+import Footer from "./components/Footer";
+import Main from "./components/Main";
 
-function App() {
+const App = () => {
+  const handleInput = useListStore(useShallow((state) => state.handleInput));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <section className="todoapp" id="root">
+      <header className="header" data-testid="header">
+        <h1>todos</h1>
+        <div className="input-container">
+          <input
+            type="text"
+            className="new-todo"
+            id="todo-input"
+            defaultValue=""
+            placeholder="What needs to be done?"
+            onKeyUp={handleInput}
+          />
+          <label className="visually-hidden" htmlFor="todo-input">
+            New Todo Input
+          </label>
+        </div>
       </header>
-    </div>
+      <Main></Main>
+      <Footer></Footer>
+    </section>
   );
-}
+};
 
 export default App;
